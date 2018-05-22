@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    android:gravity="center"
+    android:id="@+id/linear_container"
+    android:orientation="horizontal">
+
+
+    <ImageView
+        android:layout_width="100dp"
+        android:id="@+id/imagen_contacto_id"
+        android:layout_height="100dp"
+        android:layout_marginLeft="20dp" />
+
+    <TextView
+        android:id="@+id/nombre_contacto_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Nicolas"
+        android:textSize="24sp" />
+</LinearLayout>
