@@ -26,7 +26,7 @@ public class DetallePeliculaFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_detalle_pelicula, container, false);
-        imagenPelicula = view.findViewById(R.id.imagen_pelicula_id);
+        imagenPelicula = view.findViewById(R.id.imagen_pelicula);
         tituloPelicula = view.findViewById(R.id.titulo_pelicula);
         descripcionPelicula = view.findViewById(R.id.descripcion_pelicula);
 
