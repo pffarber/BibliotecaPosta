@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements PeliculasFragment
     public void notificar(Pelicula pelicula) {
         Intent intent = new Intent(this,DetallePeliculaActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putSerializable(DetallePeliculaFragment.CONTACTO_KEY, pelicula);
+        bundle.putSerializable(DetallePeliculaFragment.PELICULA_KEY, pelicula);
         intent.putExtras(bundle);
         startActivity(intent);
     }

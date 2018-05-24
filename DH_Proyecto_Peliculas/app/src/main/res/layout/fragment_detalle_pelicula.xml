@@ -7,7 +7,7 @@
     tools:context="com.example.recyclerviewbase.DetallePeliculaFragment">
 
     <ImageView
-        android:id="@+id/imagen_contacto"
+        android:id="@+id/imagen_pelicula"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -15,21 +15,21 @@
         tools:src="@drawable/santa" />
 
     <TextView
-        android:id="@+id/nombre_contacto"
+        android:id="@+id/titulo_pelicula"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/imagen_contacto"
+        android:layout_below="@id/imagen_pelicula"
         android:layout_centerHorizontal="true"
         android:textSize="24sp"
         android:textStyle="bold"
         android:textColor="@color/blanco"
-        tools:text="Nicolas" />
+        tools:text="Titulo" />
 
     <TextView
-        android:id="@+id/descripcion_contacto"
+        android:id="@+id/descripcion_pelicula"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/nombre_contacto"
+        android:layout_below="@id/titulo_pelicula"
         android:layout_centerHorizontal="true"
         android:textSize="20sp"
         android:textColor="@color/blanco"

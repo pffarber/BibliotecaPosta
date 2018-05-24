@@ -15,10 +15,10 @@ import android.widget.TextView;
  */
 public class DetallePeliculaFragment extends Fragment {
 
-    public static final String CONTACTO_KEY = "Contacto_key";
-    private ImageView imagenContacto;
-    private TextView nombreContacto;
-    private TextView descripcionContacto;
+    public static final String PELICULA_KEY = "Pelicula_key";
+    private ImageView imagenPelicula;
+    private TextView tituloPelicula;
+    private TextView descripcionPelicula;
 
 
     @Override
@@ -26,15 +26,15 @@ public class DetallePeliculaFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_detalle_pelicula, container, false);
-        imagenContacto = view.findViewById(R.id.imagen_contacto);
-        nombreContacto = view.findViewById(R.id.nombre_contacto);
-        descripcionContacto = view.findViewById(R.id.descripcion_contacto);
+        imagenPelicula = view.findViewById(R.id.imagen_pelicula_id);
+        tituloPelicula = view.findViewById(R.id.titulo_pelicula);
+        descripcionPelicula = view.findViewById(R.id.descripcion_pelicula);
 
         Bundle bundle = getArguments();
-        Pelicula pelicula = (Pelicula) bundle.getSerializable(CONTACTO_KEY);
-        nombreContacto.setText(pelicula.getNombre());
-        descripcionContacto.setText(pelicula.getDescripcion());
-        imagenContacto.setImageResource(pelicula.getImageRes());
+        Pelicula pelicula = (Pelicula) bundle.getSerializable(PELICULA_KEY);
+        tituloPelicula.setText(pelicula.getNombre());
+        descripcionPelicula.setText(pelicula.getDescripcion());
+        imagenPelicula.setImageResource(pelicula.getImageRes());
 
 
         return view;
