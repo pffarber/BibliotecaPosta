@@ -4,11 +4,13 @@ package com.example.recyclerviewbase;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,11 +24,16 @@ public class PeliculasFragment extends Fragment implements PeliculaAdapter.Notif
     private RecyclerView recyclerView;
     private List<Pelicula> peliculas;
     private NotificadorPelicula notificadorPelicula;
+    public static final String CLAVE_TITULO_CATEGORIA = "titulo_categoria";
+    TextView textTituloCategoria;
+
+
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_peliculas, container, false);
 
@@ -34,6 +41,32 @@ public class PeliculasFragment extends Fragment implements PeliculaAdapter.Notif
         armarListadoPeliculas();
         //necesito pasarle al adapter el set de datos armado
         PeliculaAdapter adapter = new PeliculaAdapter(peliculas, this);
+
+        //Eugenio Recibo bundle
+        Bundle bundle = getArguments();
+        String tituloCategoria;
+        if(bundle!=null) {
+            tituloCategoria = bundle.getString(CLAVE_TITULO_CATEGORIA);
+            textTituloCategoria=(TextView) view.findViewById(R.id.nombreCategoria);
+            textTituloCategoria.setText(tituloCategoria);
+        }
+
+        textTituloCategoria.setOnClickListener(new View.OnClickListener() {
+            @Override
+
+            public void onClick(View v) {
+
+                //GUARDO EN UNA VARIABLE Drawable la imagen
+
+                //ENVIARLE EL MENSAJE AL ACTIVITY
+
+                notificadorPelicula.abrirGrilla(textTituloCategoria.getText().toString());
+            }
+        });
+
+
+
+
         //el layout manager es la disposicion visual del recycler (lineal o grilla, con orientacion vertical u horizontal)
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),
                 LinearLayoutManager.HORIZONTAL, false));
@@ -49,6 +82,7 @@ public class PeliculasFragment extends Fragment implements PeliculaAdapter.Notif
     public void onAttach(Context context) {
         super.onAttach(context);
         notificadorPelicula = (NotificadorPelicula) context;
+
     }
 
     private void armarListadoPeliculas() {
@@ -86,5 +120,6 @@ public class PeliculasFragment extends Fragment implements PeliculaAdapter.Notif
     //INTERFAZ QUE COMUNICA FRAGMENT CON ACTIVITY. EL ACTIVITY ES QUIEN IMPLEMENTA ESTA INTERFAZ
     public interface NotificadorPelicula {
         public void notificar(Pelicula pelicula);
+        public void abrirGrilla(String categoria);
     }
 }

@@ -1,12 +1,13 @@
 package com.example.recyclerviewbase;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class DetallePeliculaActivity extends AppCompatActivity {
+public class DetallePeliculaActivity extends AppCompatActivity  implements PeliculasFragment.NotificadorPelicula{
 
     private DetallePeliculaFragment detallePeliculaFragment;
 
@@ -25,7 +26,19 @@ public class DetallePeliculaActivity extends AppCompatActivity {
     private void cargarFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.detalle_container, fragment);
+        fragmentTransaction.add(R.id.container_fragment1, fragment);
         fragmentTransaction.commit();
+    }
+
+    @Override
+    public void notificar(Pelicula pelicula) {
+        Intent intent = new Intent(this,DetallePeliculaActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(DetallePeliculaFragment.PELICULA_KEY, pelicula);
+        intent.putExtras(bundle);
+        startActivity(intent);
+    }
+    public void abrirGrilla(String categoria){
+
     }
 }

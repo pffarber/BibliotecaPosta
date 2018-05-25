@@ -4,13 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    tools:context=".GrillaCategoria"
     android:orientation="vertical"
-    tools:context="com.example.recyclerviewbase.DetallePeliculaActivity">
+    android:background="@color/colorPrimaryDark">
+
+
 
 
     <FrameLayout
-        android:id="@+id/container_fragment1"
+        android:id="@+id/container_fragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
 
 </LinearLayout>
