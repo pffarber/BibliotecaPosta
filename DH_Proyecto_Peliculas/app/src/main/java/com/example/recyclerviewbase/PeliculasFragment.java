@@ -25,7 +25,9 @@ public class PeliculasFragment extends Fragment implements PeliculaAdapter.Notif
     private List<Pelicula> peliculas;
     private NotificadorPelicula notificadorPelicula;
     public static final String CLAVE_TITULO_CATEGORIA = "titulo_categoria";
+    public static final String CLAVE_ACTIVAR_GRILLA = "estado_grilla";
     TextView textTituloCategoria;
+    private Boolean estadoGrilla;
 
 
 

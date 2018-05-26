@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class GrillaCategoria extends AppCompatActivity {
+public class GrillaCategoria extends AppCompatActivity implements PeliculasFragment.NotificadorPelicula {
 
     public static final String CLAVE_CATEGORIA = "categoria";
 
@@ -27,34 +27,33 @@ public class GrillaCategoria extends AppCompatActivity {
 
 
         cargarFragment(peliculasFragment,bundle);
-
-
-
-
-
-
     }
 
 
     //EUGENIO: AGREGUE A LA FUNCIÓN DE CARGAR FRAGMENT LOS PARAMETROS ID DEL CONTAINER DE CADA
     // FRAGMENT Y EL TITULO DE CADA CATEGORÍA
     private void cargarFragment(PeliculasFragment peliculasFragment,Bundle bundle) {
-
-
-
-        //EUGENIO: CARGO EL BUNDLE PARA ENVIAR EL TITULO DE LA CATEGORIA AL Fragment
-
+       //EUGENIO: CARGO EL BUNDLE PARA ENVIAR EL TITULO DE LA CATEGORIA AL Fragment
         peliculasFragment.setArguments(bundle);
         ////////////////////////////////////////////////////////////////////////
-
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.container_fragment, peliculasFragment);
         fragmentTransaction.commit();
         //////////////////////////////////////////////////////////////
-
-
-
     }
 
+    @Override
+    public void notificar(Pelicula pelicula) {
+        Intent intent = new Intent(this,DetallePeliculaActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(DetallePeliculaFragment.PELICULA_KEY, pelicula);
+        intent.putExtras(bundle);
+        startActivity(intent);
+    }
+
+    @Override
+    public void abrirGrilla(String categoria) {
+
+    }
 }
