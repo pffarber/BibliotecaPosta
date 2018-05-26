@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -27,7 +28,7 @@ public class PeliculasFragment extends Fragment implements PeliculaAdapter.Notif
     public static final String CLAVE_TITULO_CATEGORIA = "titulo_categoria";
     public static final String CLAVE_ACTIVAR_GRILLA = "estado_grilla";
     TextView textTituloCategoria;
-    private Boolean estadoGrilla;
+    Boolean estadoGrilla;
 
 
 
@@ -37,6 +38,7 @@ public class PeliculasFragment extends Fragment implements PeliculaAdapter.Notif
                              Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
+        estadoGrilla=false;
         View view = inflater.inflate(R.layout.fragment_peliculas, container, false);
 
         recyclerView = view.findViewById(R.id.recycler_id);
@@ -47,10 +49,14 @@ public class PeliculasFragment extends Fragment implements PeliculaAdapter.Notif
         //Eugenio Recibo bundle
         Bundle bundle = getArguments();
         String tituloCategoria;
+
+
         if(bundle!=null) {
             tituloCategoria = bundle.getString(CLAVE_TITULO_CATEGORIA);
+            estadoGrilla = bundle.getBoolean(CLAVE_ACTIVAR_GRILLA);
             textTituloCategoria=(TextView) view.findViewById(R.id.nombreCategoria);
             textTituloCategoria.setText(tituloCategoria);
+
         }
 
         textTituloCategoria.setOnClickListener(new View.OnClickListener() {
@@ -70,8 +76,12 @@ public class PeliculasFragment extends Fragment implements PeliculaAdapter.Notif
 
 
         //el layout manager es la disposicion visual del recycler (lineal o grilla, con orientacion vertical u horizontal)
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),
-                LinearLayoutManager.HORIZONTAL, false));
+        if(!estadoGrilla) {
+            recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),
+                    LinearLayoutManager.HORIZONTAL, false));
+        }else{
+            recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),2));
+        }
         //si le puse match parent al alto y ancho del recycler, el setHasFixedSize mejora la performance
         recyclerView.setHasFixedSize(true);
         //le seteo el adapter creado al recycler view

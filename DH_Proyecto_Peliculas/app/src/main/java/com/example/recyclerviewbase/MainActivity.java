@@ -15,6 +15,7 @@ public class MainActivity extends AppCompatActivity implements PeliculasFragment
     private PeliculasFragment peliculasFragment;
     private String nombreCategoria;
     private int idCategoria,idCategoria2;
+    private Boolean estado_Grilla;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,45 +25,47 @@ public class MainActivity extends AppCompatActivity implements PeliculasFragment
 
         //EUGENIO: CARGO 6 CATEGORÍAS GENERICAS
         peliculasFragment = new PeliculasFragment();
+        estado_Grilla=false;
         nombreCategoria = new String("Populares");
         idCategoria=R.id.container_fragment1;
-        cargarFragment(peliculasFragment,nombreCategoria,idCategoria);
+        cargarFragment(peliculasFragment,nombreCategoria,idCategoria,estado_Grilla);
 
         peliculasFragment = new PeliculasFragment();
         nombreCategoria = new String("Cat2");
         idCategoria2=R.id.container_fragment2;
-        cargarFragment(peliculasFragment,nombreCategoria,idCategoria2);
+        cargarFragment(peliculasFragment,nombreCategoria,idCategoria2,estado_Grilla);
 
         peliculasFragment = new PeliculasFragment();
         nombreCategoria = new String("Cat3");
         idCategoria=R.id.container_fragment3;
-        cargarFragment(peliculasFragment,nombreCategoria,idCategoria);
+        cargarFragment(peliculasFragment,nombreCategoria,idCategoria,estado_Grilla);
 
         peliculasFragment = new PeliculasFragment();
         nombreCategoria = new String("Cat4");
         idCategoria=R.id.container_fragment4;
-        cargarFragment(peliculasFragment,nombreCategoria,idCategoria);
+        cargarFragment(peliculasFragment,nombreCategoria,idCategoria,estado_Grilla);
 
         peliculasFragment = new PeliculasFragment();
         nombreCategoria = new String("Cat5");
         idCategoria=R.id.container_fragment5;
-        cargarFragment(peliculasFragment,nombreCategoria,idCategoria);
+        cargarFragment(peliculasFragment,nombreCategoria,idCategoria,estado_Grilla);
 
         peliculasFragment = new PeliculasFragment();
         nombreCategoria = new String("Cat6");
         idCategoria=R.id.container_fragment6;
-        cargarFragment(peliculasFragment,nombreCategoria,idCategoria);
+        cargarFragment(peliculasFragment,nombreCategoria,idCategoria,estado_Grilla);
     }
 
 
     //EUGENIO: AGREGUE A LA FUNCIÓN DE CARGAR FRAGMENT LOS PARAMETROS ID DEL CONTAINER DE CADA
     // FRAGMENT Y EL TITULO DE CADA CATEGORÍA
-    private void cargarFragment(Fragment fragment,String Categoria,int IdCategoria) {
+    private void cargarFragment(Fragment fragment,String Categoria,int IdCategoria,Boolean estadoGrilla) {
 
 
         //EUGENIO: CARGO EL BUNDLE PARA ENVIAR EL TITULO DE LA CATEGORIA AL Fragment
         Bundle unBundle = new Bundle();
         unBundle.putString(PeliculasFragment.CLAVE_TITULO_CATEGORIA, Categoria);
+        unBundle.putBoolean(PeliculasFragment.CLAVE_ACTIVAR_GRILLA, estadoGrilla);
         peliculasFragment.setArguments(unBundle);
         ////////////////////////////////////////////////////////////////////////
 
@@ -86,6 +89,7 @@ public class MainActivity extends AppCompatActivity implements PeliculasFragment
         //CARGO EL BUNDLE PARA ENVIAR AL ACTIVITY
         Bundle unBundle = new Bundle();
         unBundle.putString(PeliculasFragment.CLAVE_TITULO_CATEGORIA, categoria);
+        unBundle.putBoolean(PeliculasFragment.CLAVE_ACTIVAR_GRILLA, true);
         //ASOCIO EL BUNDLE AL INTENT
         unIntent.putExtras(unBundle);
 
