@@ -13,6 +13,8 @@ public class Pelicula implements Serializable {
     private String descripcion;
 
 
+
+
     public Pelicula(String nombre, int imageRes) {
         this.nombre = nombre;
         this.imageRes = imageRes;
