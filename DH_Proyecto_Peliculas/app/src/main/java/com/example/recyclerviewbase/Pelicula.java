@@ -16,6 +16,8 @@ public class Pelicula implements Serializable {
     private Integer idPelicula;
 
 
+
+
     public Pelicula(String nombre, int imageRes) {
         this.nombre = nombre;
         this.imageRes = imageRes;

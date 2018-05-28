@@ -8,9 +8,7 @@ import android.widget.ImageView;
 
 import java.util.List;
 
-/**
- * Created by ma on 21/05/18.
- */
+
 
 public class PeliculaAdapter extends RecyclerView.Adapter {
 
