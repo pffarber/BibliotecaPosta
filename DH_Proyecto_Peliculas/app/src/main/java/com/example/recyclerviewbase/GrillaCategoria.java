@@ -7,6 +7,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import java.util.ArrayList;
+
 public class GrillaCategoria extends AppCompatActivity implements PeliculasFragment.NotificadorPelicula {
 
     public static final String CLAVE_CATEGORIA = "categoria";
@@ -53,7 +55,7 @@ public class GrillaCategoria extends AppCompatActivity implements PeliculasFragm
     }
 
     @Override
-    public void abrirGrilla(String categoria) {
+    public void abrirGrilla(String categoria, ArrayList<Pelicula> peliculas) {
 
     }
 }

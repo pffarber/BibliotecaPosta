@@ -1,6 +1,7 @@
 package com.example.recyclerviewbase;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * Created by ma on 21/05/18.
@@ -11,6 +12,8 @@ public class Pelicula implements Serializable {
     private String nombre;
     private int imageRes;
     private String descripcion;
+    private Boolean estaFavorito;
+    private Integer idPelicula;
 
 
     public Pelicula(String nombre, int imageRes) {
@@ -33,7 +36,38 @@ public class Pelicula implements Serializable {
         this.nombre = nombre;
         this.imageRes = imageRes;
         this.descripcion = descripcion;
+        this.estaFavorito = false;
+
+
     }
+    public Pelicula(String nombre, String descripcion, int imageRes, Boolean estaFavorito,Integer idPelicula) {
+        this.nombre = nombre;
+        this.imageRes = imageRes;
+        this.descripcion = descripcion;
+        this.estaFavorito = estaFavorito;
+        this.idPelicula = idPelicula;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Pelicula pelicula = (Pelicula) o;
+        return Objects.equals(idPelicula, pelicula.idPelicula);
+    }
+
+
+    public Integer getIdPelicula() {
+        return idPelicula;
+    }
+
+    public void setIdPelicula(Integer idPelicula) {
+        this.idPelicula = idPelicula;
+    }
+
+    public Boolean getEstaFavorito() { return estaFavorito; }
+
     public String getNombre() {
         return nombre;
     }
@@ -53,6 +87,10 @@ public class Pelicula implements Serializable {
     public String getDescripcion() {
         return descripcion;
     }
+
+    public void setEstaFavorito(Boolean estado) { this.estaFavorito = estado;}
+
+    public void cambiarEstadoFav (){ this.estaFavorito=!this.estaFavorito; }
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;

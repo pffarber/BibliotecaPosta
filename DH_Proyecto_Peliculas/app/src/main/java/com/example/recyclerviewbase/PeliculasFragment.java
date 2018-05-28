@@ -14,7 +14,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+
+import java.io.Serializable;
+import java.util.Map;
 
 
 /**
@@ -23,10 +27,12 @@ import java.util.List;
 public class PeliculasFragment extends Fragment implements PeliculaAdapter.NotificadorPeliculaCelda {
 
     private RecyclerView recyclerView;
-    private List<Pelicula> peliculas;
+    //private List<Pelicula> peliculas;
+    private ArrayList<Pelicula> peliculas;
     private NotificadorPelicula notificadorPelicula;
     public static final String CLAVE_TITULO_CATEGORIA = "titulo_categoria";
     public static final String CLAVE_ACTIVAR_GRILLA = "estado_grilla";
+    public static final String CLAVE_PELICULAS = "clave_peliculas";
     TextView textTituloCategoria;
     Boolean estadoGrilla;
 
@@ -42,33 +48,21 @@ public class PeliculasFragment extends Fragment implements PeliculaAdapter.Notif
         View view = inflater.inflate(R.layout.fragment_peliculas, container, false);
 
         recyclerView = view.findViewById(R.id.recycler_id);
-        armarListadoPeliculas();
+
+        recibirParametro(view);
+        //  armarListadoPeliculas();
         //necesito pasarle al adapter el set de datos armado
+
         PeliculaAdapter adapter = new PeliculaAdapter(peliculas, this);
 
-        //Eugenio Recibo bundle
-        Bundle bundle = getArguments();
-        String tituloCategoria;
 
-
-        if(bundle!=null) {
-            tituloCategoria = bundle.getString(CLAVE_TITULO_CATEGORIA);
-            estadoGrilla = bundle.getBoolean(CLAVE_ACTIVAR_GRILLA);
-            textTituloCategoria=(TextView) view.findViewById(R.id.nombreCategoria);
-            textTituloCategoria.setText(tituloCategoria);
-
-        }
 
         textTituloCategoria.setOnClickListener(new View.OnClickListener() {
             @Override
-
             public void onClick(View v) {
-
                 //GUARDO EN UNA VARIABLE Drawable la imagen
-
                 //ENVIARLE EL MENSAJE AL ACTIVITY
-
-                notificadorPelicula.abrirGrilla(textTituloCategoria.getText().toString());
+                notificadorPelicula.abrirGrilla(textTituloCategoria.getText().toString(),peliculas);
             }
         });
 
@@ -97,7 +91,19 @@ public class PeliculasFragment extends Fragment implements PeliculaAdapter.Notif
 
     }
 
-    private void armarListadoPeliculas() {
+    private void recibirParametro(View view) {//Eugenio Recibo bundle
+        Bundle bundle = getArguments();
+        String tituloCategoria;
+        if (bundle != null) {
+            tituloCategoria = bundle.getString(CLAVE_TITULO_CATEGORIA);
+            estadoGrilla = bundle.getBoolean(CLAVE_ACTIVAR_GRILLA);
+            peliculas = (ArrayList) bundle.getSerializable(CLAVE_PELICULAS);
+            textTituloCategoria = (TextView) view.findViewById(R.id.nombreCategoria);
+            textTituloCategoria.setText(tituloCategoria);
+        }
+    }
+
+    /*private void armarListadoPeliculas() {
         peliculas = new ArrayList<>();
         peliculas.add(new Pelicula("Batman - El Caballero Oscuro",
                 "Acción, Drama, Crimen", R.drawable.caballero2));
@@ -117,9 +123,8 @@ public class PeliculasFragment extends Fragment implements PeliculaAdapter.Notif
                 "Ciencia Ficción", R.drawable.origen));
         peliculas.add(new Pelicula("Forrest Gump",
                 "Drama", R.drawable.forrest));
-
-
     }
+*/
 
     @Override
     public void notificarPeliculaClickeado(Pelicula pelicula) {
@@ -132,6 +137,6 @@ public class PeliculasFragment extends Fragment implements PeliculaAdapter.Notif
     //INTERFAZ QUE COMUNICA FRAGMENT CON ACTIVITY. EL ACTIVITY ES QUIEN IMPLEMENTA ESTA INTERFAZ
     public interface NotificadorPelicula {
         public void notificar(Pelicula pelicula);
-        public void abrirGrilla(String categoria);
+        public void abrirGrilla(String categoria, ArrayList<Pelicula> peliculas);
     }
 }

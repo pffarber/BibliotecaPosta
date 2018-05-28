@@ -1,5 +1,6 @@
 package com.example.recyclerviewbase;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,14 +10,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements PeliculasFragment.NotificadorPelicula{
+public class MainActivity extends AppCompatActivity implements PeliculasFragment.NotificadorPelicula,BarraExplorar.NotificadorBarraExplorar {
 
     private PeliculasFragment peliculasFragment;
+    private BarraExplorar barraExplorar;
     private String nombreCategoria;
     private int idCategoria,idCategoria2;
     private Boolean estado_Grilla;
+    public static final DatosIniciales datosIniciales = new DatosIniciales();
 
+    @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +59,22 @@ public class MainActivity extends AppCompatActivity implements PeliculasFragment
         nombreCategoria = new String("Cat6");
         idCategoria=R.id.container_fragment6;
         cargarFragment(peliculasFragment,nombreCategoria,idCategoria,estado_Grilla);
+
+
+        peliculasFragment = new PeliculasFragment();
+        nombreCategoria = new String("Cat6");
+        idCategoria=R.id.container_fragment6;
+        cargarFragment(peliculasFragment,nombreCategoria,idCategoria,estado_Grilla);
+
+        //CARGO LA BARRA EXPLORAR
+        barraExplorar = new BarraExplorar();
+        int idContanerBarra = R.id.barra_favorito_id;
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.add(idContanerBarra, barraExplorar);
+        fragmentTransaction.commit();
+
     }
 
 
@@ -63,9 +84,12 @@ public class MainActivity extends AppCompatActivity implements PeliculasFragment
 
 
         //EUGENIO: CARGO EL BUNDLE PARA ENVIAR EL TITULO DE LA CATEGORIA AL Fragment
+
+
         Bundle unBundle = new Bundle();
         unBundle.putString(PeliculasFragment.CLAVE_TITULO_CATEGORIA, Categoria);
         unBundle.putBoolean(PeliculasFragment.CLAVE_ACTIVAR_GRILLA, estadoGrilla);
+        unBundle.putSerializable(PeliculasFragment.CLAVE_PELICULAS, (Serializable) MainActivity.datosIniciales.getPeliculas());
         peliculasFragment.setArguments(unBundle);
         ////////////////////////////////////////////////////////////////////////
 
@@ -83,20 +107,35 @@ public class MainActivity extends AppCompatActivity implements PeliculasFragment
         intent.putExtras(bundle);
         startActivity(intent);
     }
-    public void abrirGrilla(String categoria){
+    public void abrirGrilla(String categoria, ArrayList<Pelicula> peliculas){
         //IR A LA Activity de detalle de categoría en grilla
         Intent unIntent = new Intent(this, GrillaCategoria.class);
         //CARGO EL BUNDLE PARA ENVIAR AL ACTIVITY
         Bundle unBundle = new Bundle();
         unBundle.putString(PeliculasFragment.CLAVE_TITULO_CATEGORIA, categoria);
         unBundle.putBoolean(PeliculasFragment.CLAVE_ACTIVAR_GRILLA, true);
+        unBundle.putSerializable(PeliculasFragment.CLAVE_PELICULAS, (Serializable) peliculas);
         //ASOCIO EL BUNDLE AL INTENT
         unIntent.putExtras(unBundle);
-
         //COMIENZO LA ACTIVIDAD
         startActivity(unIntent);
     }
 
+    @Override
+    public void abrirFavoritos() {
+        Intent unIntent = new Intent(this, GrillaCategoria.class);
+        //CARGO EL BUNDLE PARA ENVIAR AL ACTIVITY
+        Bundle unBundle = new Bundle();
+        unBundle.putString(PeliculasFragment.CLAVE_TITULO_CATEGORIA, "Favoritos");
+        unBundle.putBoolean(PeliculasFragment.CLAVE_ACTIVAR_GRILLA, true);
+        unBundle.putSerializable(PeliculasFragment.CLAVE_PELICULAS, (Serializable) this.datosIniciales.getListafavoritos());
+        //ASOCIO EL BUNDLE AL INTENT
+        unIntent.putExtras(unBundle);
+        //COMIENZO LA ACTIVIDAD
+        startActivity(unIntent);
+
+
+    }
 }
 
 

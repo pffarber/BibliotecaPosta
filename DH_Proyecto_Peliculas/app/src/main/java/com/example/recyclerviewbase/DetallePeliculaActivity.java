@@ -7,6 +7,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import java.util.ArrayList;
+
 public class DetallePeliculaActivity extends AppCompatActivity  implements PeliculasFragment.NotificadorPelicula{
 
     private DetallePeliculaFragment detallePeliculaFragment;
@@ -38,7 +40,7 @@ public class DetallePeliculaActivity extends AppCompatActivity  implements Pelic
         intent.putExtras(bundle);
         startActivity(intent);
     }
-    public void abrirGrilla(String categoria){
+    public void abrirGrilla(String categoria, ArrayList<Pelicula> peliculas){
 
     }
 }

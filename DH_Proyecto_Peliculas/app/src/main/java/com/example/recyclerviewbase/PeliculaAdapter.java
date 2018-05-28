@@ -69,13 +69,14 @@ public class PeliculaAdapter extends RecyclerView.Adapter {
     public class ViewHolderPelicula extends RecyclerView.ViewHolder {
 
 
-        private ImageView imagenPelicula;
+        private ImageView imagenPelicula,imagenestadoFavorito;
 
         //este itemview es la celda construida
         public ViewHolderPelicula(View itemView) {
             super(itemView);
 
             imagenPelicula = itemView.findViewById(R.id.imagen_pelicula_id);
+            imagenestadoFavorito= itemView.findViewById(R.id.favorito_id);
 
             imagenPelicula.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -83,14 +84,40 @@ public class PeliculaAdapter extends RecyclerView.Adapter {
                     int posicionPeliculaClickeado = getAdapterPosition();
                     Pelicula pelicula = peliculas.get(posicionPeliculaClickeado);
                     notificadorPeliculaCelda.notificarPeliculaClickeado(pelicula);
+
+                }
+                
+            });
+            imagenestadoFavorito.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Pelicula pelicula = peliculas.get(getAdapterPosition());
+                    pelicula.cambiarEstadoFav();
+
+                    // TODO: 27/5/2018 crear la función setearImagenFavorito que haga este trabajo para no repetir codigo
+                    if(pelicula.getEstaFavorito()){
+                        imagenestadoFavorito.setImageResource(R.drawable.ic_favorite_black_24dp);
+                        MainActivity.datosIniciales.agregaraFavoritos(pelicula);
+                    }else{
+                        imagenestadoFavorito.setImageResource(R.drawable.ic_favorite_border_black_24dp);
+                        MainActivity.datosIniciales.removerFavoritos(pelicula);
+                    }
+                    
                 }
             });
         }
 
+        
         public void cargarPelicula(Pelicula pelicula) {
             //el pelicula que recibe deberia sacarle sus datos y pegarlos en la celda
-
+// TODO: 27/5/2018 cambiar este hardcodeo para que sea facil el cambio de la imagen de favoritos ya que no está definida 
             imagenPelicula.setImageResource(pelicula.getImageRes());
+            if(pelicula.getEstaFavorito()){
+                imagenestadoFavorito.setImageResource(R.drawable.ic_favorite_black_24dp);
+            }else{
+                imagenestadoFavorito.setImageResource(R.drawable.ic_favorite_border_black_24dp);
+            }
+            
         }
 
     }
