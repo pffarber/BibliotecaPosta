@@ -30,6 +30,7 @@ public class PeliculasFragment extends Fragment implements PeliculaAdapter.Notif
     //private List<Pelicula> peliculas;
     private ArrayList<Pelicula> peliculas;
     private NotificadorPelicula notificadorPelicula;
+    private PeliculaAdapter adapter;
     public static final String CLAVE_TITULO_CATEGORIA = "titulo_categoria";
     public static final String CLAVE_ACTIVAR_GRILLA = "estado_grilla";
     public static final String CLAVE_PELICULAS = "clave_peliculas";
@@ -53,7 +54,7 @@ public class PeliculasFragment extends Fragment implements PeliculaAdapter.Notif
         //  armarListadoPeliculas();
         //necesito pasarle al adapter el set de datos armado
 
-        PeliculaAdapter adapter = new PeliculaAdapter(peliculas, this);
+        adapter = new PeliculaAdapter(peliculas, this);
 
 
 
@@ -103,6 +104,13 @@ public class PeliculasFragment extends Fragment implements PeliculaAdapter.Notif
         }
     }
 
+    public void actualizarPelicula(Pelicula pelicula){
+        if(peliculas.contains(pelicula)){
+            adapter.actualizarPelicula(pelicula);
+        }
+    }
+
+
     /*private void armarListadoPeliculas() {
         peliculas = new ArrayList<>();
         peliculas.add(new Pelicula("Batman - El Caballero Oscuro",
@@ -132,11 +140,23 @@ public class PeliculasFragment extends Fragment implements PeliculaAdapter.Notif
         //Esto hace de pasa mano, y tiene que notificarle al activity el pelicula que llegó.
         //aca estoy en el metodo que me obligo a implementar LA INTERFAZ DEL ADAPTER!
         notificadorPelicula.notificar(pelicula);
+
     }
+
+    @Override
+    public void solicitudDeActualizacionAdapters(Pelicula pelicula) {
+        notificadorPelicula.solicituddeActualizarDatosFragmentsPelicula(pelicula);
+
+    }
+
 
     //INTERFAZ QUE COMUNICA FRAGMENT CON ACTIVITY. EL ACTIVITY ES QUIEN IMPLEMENTA ESTA INTERFAZ
     public interface NotificadorPelicula {
         public void notificar(Pelicula pelicula);
         public void abrirGrilla(String categoria, ArrayList<Pelicula> peliculas);
+        public void solicituddeActualizarDatosFragmentsPelicula(Pelicula pelicula);
+
     }
+
+
 }

@@ -7,13 +7,14 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements PeliculasFragment.NotificadorPelicula,BarraExplorar.NotificadorBarraExplorar {
 
+   private ArrayList<PeliculasFragment> lista_peliculasFragment;
     private PeliculasFragment peliculasFragment;
     private BarraExplorar barraExplorar;
     private String nombreCategoria;
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity implements PeliculasFragment
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        lista_peliculasFragment= new ArrayList<>();
 
         //EUGENIO: CARGO 6 CATEGORÍAS GENERICAS
         peliculasFragment = new PeliculasFragment();
@@ -34,37 +36,45 @@ public class MainActivity extends AppCompatActivity implements PeliculasFragment
         nombreCategoria = new String("Populares");
         idCategoria=R.id.container_fragment1;
         cargarFragment(peliculasFragment,nombreCategoria,idCategoria,estado_Grilla);
+        lista_peliculasFragment.add(peliculasFragment);
 
         peliculasFragment = new PeliculasFragment();
         nombreCategoria = new String("Cat2");
         idCategoria2=R.id.container_fragment2;
         cargarFragment(peliculasFragment,nombreCategoria,idCategoria2,estado_Grilla);
+        lista_peliculasFragment.add(peliculasFragment);
 
         peliculasFragment = new PeliculasFragment();
         nombreCategoria = new String("Cat3");
         idCategoria=R.id.container_fragment3;
         cargarFragment(peliculasFragment,nombreCategoria,idCategoria,estado_Grilla);
+        lista_peliculasFragment.add(peliculasFragment);
 
         peliculasFragment = new PeliculasFragment();
         nombreCategoria = new String("Cat4");
         idCategoria=R.id.container_fragment4;
         cargarFragment(peliculasFragment,nombreCategoria,idCategoria,estado_Grilla);
+        lista_peliculasFragment.add(peliculasFragment);
 
         peliculasFragment = new PeliculasFragment();
         nombreCategoria = new String("Cat5");
         idCategoria=R.id.container_fragment5;
         cargarFragment(peliculasFragment,nombreCategoria,idCategoria,estado_Grilla);
-
-        peliculasFragment = new PeliculasFragment();
-        nombreCategoria = new String("Cat6");
-        idCategoria=R.id.container_fragment6;
-        cargarFragment(peliculasFragment,nombreCategoria,idCategoria,estado_Grilla);
+        lista_peliculasFragment.add(peliculasFragment);
 
 
         peliculasFragment = new PeliculasFragment();
         nombreCategoria = new String("Cat6");
         idCategoria=R.id.container_fragment6;
         cargarFragment(peliculasFragment,nombreCategoria,idCategoria,estado_Grilla);
+        lista_peliculasFragment.add(peliculasFragment);
+
+
+        peliculasFragment = new PeliculasFragment();
+        nombreCategoria = new String("Cat6");
+        idCategoria=R.id.container_fragment6;
+        cargarFragment(peliculasFragment,nombreCategoria,idCategoria,estado_Grilla);
+        lista_peliculasFragment.add(peliculasFragment);
 
         //CARGO LA BARRA EXPLORAR
         barraExplorar = new BarraExplorar();
@@ -74,6 +84,43 @@ public class MainActivity extends AppCompatActivity implements PeliculasFragment
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(idContanerBarra, barraExplorar);
         fragmentTransaction.commit();
+
+    }
+
+
+ /*   protected void onRestart() {
+
+        super.onRestart();
+        CharSequence text = "OnRestart";
+        solicituddeActualizarDatosFragmentsPelicula();
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(getApplicationContext(), text, duration);
+        toast.show();
+
+
+    }
+*/
+
+  /*protected void onRestart() {
+
+        super.onRestart();
+        CharSequence text = "Hello toast!";
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(getApplicationContext(), text, duration);
+        toast.show();
+
+    }*/
+
+    protected void onResume() {
+
+        super.onResume();
+        CharSequence text = "OnResume!";
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(getApplicationContext(), text, duration);
+        toast.show();
 
     }
 
@@ -107,6 +154,8 @@ public class MainActivity extends AppCompatActivity implements PeliculasFragment
         intent.putExtras(bundle);
         startActivity(intent);
     }
+
+    @Override
     public void abrirGrilla(String categoria, ArrayList<Pelicula> peliculas){
         //IR A LA Activity de detalle de categoría en grilla
         Intent unIntent = new Intent(this, GrillaCategoria.class);
@@ -120,6 +169,17 @@ public class MainActivity extends AppCompatActivity implements PeliculasFragment
         //COMIENZO LA ACTIVIDAD
         startActivity(unIntent);
     }
+
+
+    @Override
+    public void solicituddeActualizarDatosFragmentsPelicula(Pelicula pelicula){
+        for(PeliculasFragment fragmentActual: lista_peliculasFragment ){
+            fragmentActual.actualizarPelicula(pelicula);
+
+        }
+    }
+
+
 
     @Override
     public void abrirFavoritos() {
@@ -136,6 +196,9 @@ public class MainActivity extends AppCompatActivity implements PeliculasFragment
 
 
     }
+
+
+
 }
 
 

@@ -56,7 +56,7 @@ public class Pelicula implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Pelicula pelicula = (Pelicula) o;
-        return Objects.equals(idPelicula, pelicula.idPelicula);
+        return idPelicula.equals(pelicula.idPelicula);
     }
 
 

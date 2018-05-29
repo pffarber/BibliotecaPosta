@@ -9,9 +9,10 @@ import android.os.Bundle;
 
 import java.util.ArrayList;
 
-public class GrillaCategoria extends AppCompatActivity implements PeliculasFragment.NotificadorPelicula {
+public class GrillaCategoria extends AppCompatActivity implements PeliculasFragment.NotificadorPelicula{
 
     public static final String CLAVE_CATEGORIA = "categoria";
+    private PeliculasFragment peliculasFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +26,7 @@ public class GrillaCategoria extends AppCompatActivity implements PeliculasFragm
 
         //detallePeliculaFragment = new DetallePeliculaFragment();
 
-         PeliculasFragment peliculasFragment = new PeliculasFragment();
+         peliculasFragment = new PeliculasFragment();
 
 
         cargarFragment(peliculasFragment,bundle);
@@ -54,8 +55,16 @@ public class GrillaCategoria extends AppCompatActivity implements PeliculasFragm
         startActivity(intent);
     }
 
+
     @Override
     public void abrirGrilla(String categoria, ArrayList<Pelicula> peliculas) {
 
     }
+
+    @Override
+    public void solicituddeActualizarDatosFragmentsPelicula(Pelicula pelicula) {
+        peliculasFragment.actualizarPelicula(pelicula);
+    }
+
+
 }

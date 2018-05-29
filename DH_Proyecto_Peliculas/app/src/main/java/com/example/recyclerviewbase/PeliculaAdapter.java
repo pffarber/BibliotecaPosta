@@ -64,6 +64,11 @@ public class PeliculaAdapter extends RecyclerView.Adapter {
         }
     }
 
+    public void actualizarPelicula(Pelicula pelicula) {
+        int indexPelicula = peliculas.indexOf(pelicula);
+        notifyItemChanged(indexPelicula);
+    }
+
     public class ViewHolderPelicula extends RecyclerView.ViewHolder {
 
 
@@ -94,13 +99,11 @@ public class PeliculaAdapter extends RecyclerView.Adapter {
 
                     // TODO: 27/5/2018 crear la función setearImagenFavorito que haga este trabajo para no repetir codigo
                     if(pelicula.getEstaFavorito()){
-                        imagenestadoFavorito.setImageResource(R.drawable.ic_favorite_black_24dp);
                         MainActivity.datosIniciales.agregaraFavoritos(pelicula);
                     }else{
-                        imagenestadoFavorito.setImageResource(R.drawable.ic_favorite_border_black_24dp);
                         MainActivity.datosIniciales.removerFavoritos(pelicula);
                     }
-                    
+                    notificadorPeliculaCelda.solicitudDeActualizacionAdapters(pelicula);
                 }
             });
         }
@@ -123,5 +126,6 @@ public class PeliculaAdapter extends RecyclerView.Adapter {
     //INTERFAZ QUE COMUNICA ADAPTER CON FRAGMENT. EL FRAGMENT ES QUIEN IMPLEMENTA ESTA INTERFAZ
     public interface NotificadorPeliculaCelda {
         public void notificarPeliculaClickeado(Pelicula pelicula);
+        public void solicitudDeActualizacionAdapters(Pelicula pelicula);
     }
 }
